@@ -27,5 +27,16 @@ class TaskManagerApp < Sinatra::Base
     @task = TaskManager.find(id.to_i)
     erb :show
   end
+
+  get '/tasks/:id/edit' do |id|
+    @task = TaskManager.find(id.to_i)
+    erb :edit
+  end
+
+  not_found do
+    erb :error
+  end
+
+
 end
 
