@@ -7,5 +7,12 @@ require 'minitest/pride'
 class Minitest::Test
   def teardown
     TaskManager.delete_all
-    end
+  end
+end
+
+Capybara.app = TaskManagerApp
+Capybara.save_and_open_page_path = "/tmp"
+
+class FeatureTest < Minitest::Test
+  include Capybara::DSL
 end
