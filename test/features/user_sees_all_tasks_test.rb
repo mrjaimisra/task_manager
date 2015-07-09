@@ -36,26 +36,31 @@ class UserSeesAllTasksTest < FeatureTest
   end
 
   def test_user_can_edit_a_task
-    visit("/")
+    # visit("/")
+    #
+    # click_link("New Task")
+    #
+    # assert_equal "/tasks/new", current_path
+    #
+    # fill_in("task[title]", with: "pizza")
+    # fill_in("task[description]", with: "longer pizza")
+    #
+    # assert_equal "/tasks/new", current_path
+    #
+    #
+    # click_button("Create Task")
+    #
+    # within(".container") do
+    #   assert page.has_content?("pizza")
+    # end
 
-    click_link("New Task")
+    task = TaskManager.create(title: "Pizza", description: "Pepperoni")
 
-    assert_equal "/tasks/new", current_path
-
-    fill_in("task[title]", with: "pizza")
-    fill_in("task[description]", with: "longer pizza")
-
-    assert_equal "/tasks/new", current_path
-    click_button("Create Task")
-
-    within(".container") do
-      assert page.has_content?("pizza")
-    end
-
-    assert_equal "/tasks", current_path
+    visit("/tasks")
 
     click_link("edit")
 
-    assert_equal "/tasks/1/edit", current_path
+    assert_equal "/tasks/#{task.id}/edit", current_path
   end
+
 end
