@@ -5,9 +5,9 @@
 class TaskManager
   def self.database
     if ENV["TASK_MANAGER_ENV"] == 'test'
-      @database ||= Sequel.sqlite("db/task_manager_test_sqlite3")
+      @database ||= Sequel.sqlite("db/task_manager_test.sqlite3")
     else
-      @database ||= YAML::Store.new("db/task_manager")
+      @database ||= Sequel.sqlite("db/task_manager_development.sqlite3")
     end
   end
 
@@ -53,10 +53,11 @@ class TaskManager
   end
 
   def self.delete_all
-    database.transaction do
-      database['tasks'] = []
-      database['total'] = 0
-    end
+    database.from(:tasks).delete
+    # database.transaction do
+    #   database['tasks'] = []
+    #   database['total'] = 0
+    # end
   end
 
 end
